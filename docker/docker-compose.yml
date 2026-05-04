@@ -1,0 +1,29 @@
+version: '3.8'
+services:
+  oracle-cergy:
+    image: gvenzl/oracle-xe:21-full
+    container_name: oracle-cergy
+    ports:
+      - "1521:1521"
+    environment:
+      ORACLE_PASSWORD: admin123
+    volumes:
+      - ./init_cergy.sh:/container-entrypoint-initdb.d/init.sh
+    networks:
+      - oracle-net
+
+  oracle-pau:
+    image: gvenzl/oracle-xe:21-full
+    container_name: oracle-pau
+    ports:
+      - "1522:1521"
+    environment:
+      ORACLE_PASSWORD: admin123
+    volumes:
+      - ./init_pau.sh:/container-entrypoint-initdb.d/init.sh
+    networks:
+      - oracle-net
+
+networks:
+  oracle-net:
+    driver: bridge
