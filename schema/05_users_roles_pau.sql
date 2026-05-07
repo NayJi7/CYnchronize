@@ -1,28 +1,11 @@
--- schema/04_users_roles_pau.sql
--- Run as SYSTEM on Pau node (port 1522)
--- Identical structure to cergy version
+-- schema/05_users_roles_pau.sql
+-- Run as SYSTEM on Pau node (port 1522), after GLPI_OWNER tables exist
+-- Identical structure to Cergy version
 -- Database links are created in perf/ task (not here)
 ALTER SESSION SET CONTAINER = FREEPDB1;
 
 -- ============================================================
--- Schema owner
--- ============================================================
-CREATE USER GLPI_OWNER IDENTIFIED BY admin123
-    DEFAULT TABLESPACE TBS_MATERIELS
-    QUOTA UNLIMITED ON TBS_REFERENTIEL
-    QUOTA UNLIMITED ON TBS_UTILISATEURS
-    QUOTA UNLIMITED ON TBS_MATERIELS
-    QUOTA UNLIMITED ON TBS_RESEAU
-    QUOTA UNLIMITED ON TBS_AUDIT
-    QUOTA UNLIMITED ON TBS_INDEX;
-
-GRANT CREATE SESSION, CREATE TABLE, CREATE VIEW, CREATE SEQUENCE,
-      CREATE PROCEDURE, CREATE TRIGGER, CREATE MATERIALIZED VIEW,
-      CREATE DATABASE LINK, CREATE CLUSTER, CREATE SYNONYM
-    TO GLPI_OWNER;
-
--- ============================================================
--- Roles (same as Cergy)
+-- Roles
 -- ============================================================
 CREATE ROLE ROLE_ADMIN_PARC;
 CREATE ROLE ROLE_TECH_RESEAU;

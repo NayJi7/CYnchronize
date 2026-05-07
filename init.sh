@@ -12,22 +12,26 @@ echo "=== Step 1: Tablespaces ==="
 sqlplus system/admin123@localhost:1521/FREEPDB1 @schema/01_tablespaces_cergy.sql
 sqlplus system/admin123@localhost:1522/FREEPDB1 @schema/01_tablespaces_pau.sql
 
-echo "=== Step 2: Tables ==="
+echo "=== Step 2: Owner ==="
+sqlplus system/admin123@localhost:1521/FREEPDB1 @schema/04_owner_cergy.sql
+sqlplus system/admin123@localhost:1522/FREEPDB1 @schema/04_owner_pau.sql
+
+echo "=== Step 3: Tables ==="
 sqlplus GLPI_OWNER/admin123@localhost:1521/FREEPDB1 @schema/02_tables.sql
 sqlplus GLPI_OWNER/admin123@localhost:1522/FREEPDB1 @schema/02_tables.sql
 
-echo "=== Step 3: Constraints ==="
+echo "=== Step 4: Constraints ==="
 sqlplus GLPI_OWNER/admin123@localhost:1521/FREEPDB1 @schema/03_constraints.sql
 sqlplus GLPI_OWNER/admin123@localhost:1522/FREEPDB1 @schema/03_constraints.sql
 
-echo "=== Step 4: Users and Roles ==="
-sqlplus system/admin123@localhost:1521/FREEPDB1 @schema/04_users_roles_cergy.sql
-sqlplus system/admin123@localhost:1522/FREEPDB1 @schema/04_users_roles_pau.sql
+echo "=== Step 5: Users and Roles ==="
+sqlplus system/admin123@localhost:1521/FREEPDB1 @schema/05_users_roles_cergy.sql
+sqlplus system/admin123@localhost:1522/FREEPDB1 @schema/05_users_roles_pau.sql
 
-echo "=== Step 5: MV Logs (Cergy) ==="
+echo "=== Step 6: MV Logs (Cergy) ==="
 sqlplus GLPI_OWNER/admin123@localhost:1521/FREEPDB1 @perf/00_mv_logs_cergy.sql
 
-echo "=== Step 6: PL/SQL ==="
+echo "=== Step 7: PL/SQL ==="
 sqlplus GLPI_OWNER/admin123@localhost:1521/FREEPDB1 @plsql/01_exceptions.sql
 sqlplus GLPI_OWNER/admin123@localhost:1522/FREEPDB1 @plsql/01_exceptions.sql
 sqlplus GLPI_OWNER/admin123@localhost:1521/FREEPDB1 @plsql/02_pkg_fonctions_metier_spec.sql
@@ -45,20 +49,20 @@ sqlplus GLPI_OWNER/admin123@localhost:1522/FREEPDB1 @plsql/07_triggers_audit.sql
 sqlplus GLPI_OWNER/admin123@localhost:1521/FREEPDB1 @plsql/08_curseur_batch.sql
 sqlplus GLPI_OWNER/admin123@localhost:1522/FREEPDB1 @plsql/08_curseur_batch.sql
 
-echo "=== Step 7: BDDR (db links, materialized views, global views) ==="
+echo "=== Step 8: BDDR (db links, materialized views, global views) ==="
 sqlplus GLPI_OWNER/admin123@localhost:1521/FREEPDB1 @perf/01_db_links_cergy.sql
 sqlplus GLPI_OWNER/admin123@localhost:1522/FREEPDB1 @perf/02_db_links_pau.sql
 sqlplus GLPI_OWNER/admin123@localhost:1522/FREEPDB1 @perf/03_materialized_views_pau.sql
 sqlplus GLPI_OWNER/admin123@localhost:1521/FREEPDB1 @perf/04_global_views_cergy.sql
 sqlplus GLPI_OWNER/admin123@localhost:1522/FREEPDB1 @perf/04_global_views_pau.sql
 
-echo "=== Step 8: Seed Data ==="
+echo "=== Step 9: Seed Data ==="
 sqlplus GLPI_OWNER/admin123@localhost:1521/FREEPDB1 @tests/01_referentiels_cergy.sql
 sqlplus GLPI_OWNER/admin123@localhost:1522/FREEPDB1 @tests/02_referentiels_pau_mv_refresh.sql
 sqlplus GLPI_OWNER/admin123@localhost:1521/FREEPDB1 @tests/03_data_cergy.sql
 sqlplus GLPI_OWNER/admin123@localhost:1522/FREEPDB1 @tests/04_data_pau.sql
 
-echo "=== Step 9: Benchmark Table ==="
+echo "=== Step 10: Benchmark Table ==="
 sqlplus GLPI_OWNER/admin123@localhost:1521/FREEPDB1 @tests/07_create_benchmark_table.sql
 sqlplus GLPI_OWNER/admin123@localhost:1522/FREEPDB1 @tests/07_create_benchmark_table.sql
 
