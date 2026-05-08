@@ -1,7 +1,6 @@
 -- perf/06_indexes_bitmap.sql
 -- Run as GLPI_OWNER on BOTH nodes
 -- Index Bitmap sur colonnes à faible sélectivité (peu de valeurs différentes)
--- Remarque : index Bitmap disponible en version Enterprise uniquement (CM2)
 
 CREATE BITMAP INDEX IDX_BM_MATERIEL_STATUT
     ON MATERIEL (statut)

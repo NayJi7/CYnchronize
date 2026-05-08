@@ -1,7 +1,6 @@
 -- perf/09_cluster_materiel_attribution.sql
 -- Run as GLPI_OWNER on BOTH nodes
 -- Cluster indexé sur materiel_id regroupant MATERIEL (maître) et ATTRIBUTION (détail)
--- Les lignes ayant le même materiel_id sont stockées proches sur le disque (CM2)
 
 -- Sauvegarde des données
 CREATE TABLE temp_materiel    AS SELECT * FROM MATERIEL;

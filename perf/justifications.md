@@ -51,7 +51,7 @@ Un cluster stocke les données de plusieurs tables ayant des colonnes en commun 
 
 | Accès | Type | Latence observée |
 |---|---|---|
-| `SELECT * FROM MV_SITE` sur Pau | Lecture locale (MV) | < 5 ms |
-| `SELECT * FROM SITE@dblink_cergy` depuis Pau | Réseau + Oracle Net | > 50 ms |
+| `SELECT * FROM MV_SITE` sur Pau | Lecture locale (MV) | à mesurer |
+| `SELECT * FROM GLPI_OWNER.SITE@dblink_cergy` depuis Pau | Réseau + Oracle Net | à mesurer |
 
 **Conclusion** : La vue matérialisée élimine le coût réseau pour les référentiels en lecture seule. Le db link reste nécessaire pour les données opérationnelles en temps réel et pour le rafraîchissement des MV.

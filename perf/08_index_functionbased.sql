@@ -1,7 +1,6 @@
 -- perf/08_index_functionbased.sql
 -- Run as GLPI_OWNER on BOTH nodes
 -- Index par fonction sur UPPER(login) pour recherche insensible à la casse
--- Remarque : la fonction UPPER est déterministe (CM2)
 
 CREATE INDEX IDX_USER_UPPER_LOGIN
     ON UTILISATEUR (UPPER(login))

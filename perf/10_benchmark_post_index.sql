@@ -11,9 +11,9 @@ DECLARE
     v_temps  NUMBER;
     v_noeud  VARCHAR2(10);
 BEGIN
-    SELECT code INTO v_noeud FROM SITE WHERE ROWNUM = 1;
+    SELECT NVL(MAX(code), 'INCONNU') INTO v_noeud FROM SITE;
 
-    -- Q1 : Recherche par numero de serie (cible IDX_MATERIEL --- B-Tree sur numero_serie via UK)
+    -- Q1 : Recherche par numero de serie (index unique uk_materiel_serie)
     v_debut := DBMS_UTILITY.GET_TIME;
     FOR r IN (SELECT id, numero_serie, statut, etat FROM MATERIEL
               WHERE numero_serie = 'SN-CG-00001') LOOP
@@ -90,16 +90,19 @@ BEGIN
     INSERT INTO RESULTAT_BENCHMARK (requete_id, scenario, temps_ms, date_mesure, noeud)
     VALUES (6, 'AVEC_INDEX_ALL', v_temps, SYSDATE, v_noeud);
 
-    -- Q7 : Referentiel via MV locale vs acces db link distant (comparaison BDDR)
-    v_debut := DBMS_UTILITY.GET_TIME;
-    FOR r IN (SELECT id, code, nom FROM MV_SITE) LOOP
-        NULL;
-    END LOOP;
-    v_fin   := DBMS_UTILITY.GET_TIME;
-    v_temps := (v_fin - v_debut) * 10;
-
-    INSERT INTO RESULTAT_BENCHMARK (requete_id, scenario, temps_ms, date_mesure, noeud)
-    VALUES (7, 'AVEC_INDEX_ALL', v_temps, SYSDATE, v_noeud);
+    -- Q7 : Referentiel via MV locale (Pau uniquement — MV_SITE n'existe pas sur Cergy)
+    BEGIN
+        v_debut := DBMS_UTILITY.GET_TIME;
+        FOR r IN (SELECT id, code, nom FROM MV_SITE) LOOP
+            NULL;
+        END LOOP;
+        v_fin   := DBMS_UTILITY.GET_TIME;
+        v_temps := (v_fin - v_debut) * 10;
+        INSERT INTO RESULTAT_BENCHMARK (requete_id, scenario, temps_ms, date_mesure, noeud)
+        VALUES (7, 'AVEC_INDEX_ALL', v_temps, SYSDATE, v_noeud);
+    EXCEPTION
+        WHEN OTHERS THEN NULL;
+    END;
 
     -- Q8 : Agregat comptage par type / statut / site (cible Bitmap)
     v_debut := DBMS_UTILITY.GET_TIME;
