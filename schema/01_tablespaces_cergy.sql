@@ -1,6 +1,6 @@
 -- schema/01_tablespaces_cergy.sql
 -- Run as SYSTEM on Cergy node (port 1521)
-ALTER SESSION SET CONTAINER = FREEPDB1;
+ALTER SESSION SET CONTAINER = XEPDB1;
 
 -- Referential data (small, read-heavy)
 CREATE TABLESPACE TBS_REFERENTIEL

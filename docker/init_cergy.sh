@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 echo "Setting up Cergy node..."
-ORACLE_PDB=FREEPDB1
+ORACLE_PDB=XEPDB1
 
 sqlplus / as sysdba <<EOF
 ALTER SESSION SET CONTAINER=$ORACLE_PDB;
