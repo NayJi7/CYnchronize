@@ -1,6 +1,6 @@
 -- schema/05_users_roles_cergy.sql
 -- Run as SYSTEM on Cergy node (port 1521), after GLPI_OWNER tables exist
-ALTER SESSION SET CONTAINER = FREEPDB1;
+ALTER SESSION SET CONTAINER = XEPDB1;
 
 -- ============================================================
 -- Roles

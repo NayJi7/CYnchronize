@@ -1,6 +1,6 @@
 -- schema/04_owner_pau.sql
 -- Run as SYSTEM on Pau node (port 1522)
-ALTER SESSION SET CONTAINER = FREEPDB1;
+ALTER SESSION SET CONTAINER = XEPDB1;
 
 -- ============================================================
 -- Schema owner

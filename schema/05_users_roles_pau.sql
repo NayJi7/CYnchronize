@@ -2,7 +2,7 @@
 -- Run as SYSTEM on Pau node (port 1522), after GLPI_OWNER tables exist
 -- Identical structure to Cergy version
 -- Database links are created in perf/ task (not here)
-ALTER SESSION SET CONTAINER = FREEPDB1;
+ALTER SESSION SET CONTAINER = XEPDB1;
 
 -- ============================================================
 -- Roles
