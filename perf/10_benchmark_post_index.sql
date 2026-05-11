@@ -90,12 +90,10 @@ BEGIN
     INSERT INTO RESULTAT_BENCHMARK (requete_id, scenario, temps_ms, date_mesure, noeud)
     VALUES (6, 'AVEC_INDEX_ALL', v_temps, SYSDATE, v_noeud);
 
-    -- Q7 : Referentiel via MV locale (Pau uniquement — MV_SITE n'existe pas sur Cergy)
+    -- Q7 : Referentiel via MV locale (Pau uniquement, MV_SITE n'existe pas sur Cergy)
     BEGIN
         v_debut := DBMS_UTILITY.GET_TIME;
-        FOR r IN (SELECT id, code, nom FROM MV_SITE) LOOP
-            NULL;
-        END LOOP;
+        EXECUTE IMMEDIATE 'BEGIN FOR r IN (SELECT id FROM MV_SITE) LOOP NULL; END LOOP; END;';
         v_fin   := DBMS_UTILITY.GET_TIME;
         v_temps := (v_fin - v_debut) * 10;
         INSERT INTO RESULTAT_BENCHMARK (requete_id, scenario, temps_ms, date_mesure, noeud)
