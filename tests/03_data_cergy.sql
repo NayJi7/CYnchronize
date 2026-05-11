@@ -53,9 +53,9 @@ VALUES (
 v_types(MOD(i-1, 9) + 1),
 1,
 MOD(i, 5) + 1,
-'00:1A:2B:3C:' || LPAD(MOD(i,255), 2, '0') || ':' ||
-LPAD(MOD(i*3,255), 2, '0'),
-'10.1.' || MOD(i, 255) || '.' || (MOD(i*3, 254) + 1)
+'00:1A:2B:3C:' || TO_CHAR(TRUNC((i-1)/256), 'FM0X') || ':' ||
+TO_CHAR(MOD(i-1, 256), 'FM0X'),
+'10.1.' || TRUNC((i-1)/250) || '.' || MOD(i-1, 250)
 );
 END LOOP;
 COMMIT;
@@ -65,14 +65,16 @@ END;
 -- Ports reseau
 DECLARE
 v_nb_ports NUMBER := 24;
+v_vlan_ids SYS.ODCINUMBERLIST;
 BEGIN
+SELECT id BULK COLLECT INTO v_vlan_ids FROM VLAN WHERE site_id = 1 ORDER BY numero;
 FOR eq_rec IN (SELECT id FROM EQUIPEMENT_RESEAU WHERE site_id = 1) LOOP
 FOR p IN 1..v_nb_ports LOOP
 INSERT INTO PORT_RESEAU (equipement_id, numero, vlan_id, statut)
 VALUES (
 eq_rec.id, p,
-CASE WHEN p<=8 THEN 10 WHEN p<=16 THEN 20 WHEN p<=20 THEN 30
-WHEN p<=22 THEN 40 ELSE 50 END,
+v_vlan_ids(CASE WHEN p<=8 THEN 1 WHEN p<=16 THEN 2 WHEN p<=20 THEN 3
+WHEN p<=22 THEN 4 ELSE 5 END),
 CASE WHEN MOD(eq_rec.id + p, 3) = 0 THEN 'libre' ELSE 'utilise'
 END
 );
@@ -111,24 +113,27 @@ END;
 
 -- Attributions
 DECLARE
-v_mat_ids SYS.ODCINUMBERLIST;
+v_mat_ids  SYS.ODCINUMBERLIST;
+v_user_ids SYS.ODCINUMBERLIST;
 BEGIN
-SELECT id BULK COLLECT INTO v_mat_ids FROM MATERIEL WHERE site_id = 1;
+SELECT id BULK COLLECT INTO v_mat_ids  FROM MATERIEL    WHERE site_id = 1;
+SELECT id BULK COLLECT INTO v_user_ids FROM UTILISATEUR WHERE site_id = 1;
 
 -- 3000 active
 FOR i IN 1..3000 LOOP
 INSERT INTO ATTRIBUTION (materiel_id, utilisateur_id, date_debut,
 date_fin, motif)
-VALUES (v_mat_ids(i), MOD(i*7, 2500) + 1, ADD_MONTHS(SYSDATE, -
-MOD(i*11, 24)), NULL, 'Attribution initiale');
+VALUES (v_mat_ids(i), v_user_ids(MOD(i*7, v_user_ids.COUNT) + 1),
+ADD_MONTHS(SYSDATE, -MOD(i*11, 24)), NULL, 'Attribution initiale');
 END LOOP;
 -- 2000 closed
 
 FOR i IN 3001..5000 LOOP
 INSERT INTO ATTRIBUTION (materiel_id, utilisateur_id, date_debut,
 date_fin, motif)
-VALUES (v_mat_ids(MOD(i-1, v_mat_ids.COUNT) + 1), MOD(i*13, 2500) + 1,
-ADD_MONTHS(SYSDATE, -MOD(i*17, 48)), ADD_MONTHS(SYSDATE, -MOD(i*7, 12)),
+VALUES (v_mat_ids(MOD(i-1, v_mat_ids.COUNT) + 1),
+v_user_ids(MOD(i*13, v_user_ids.COUNT) + 1),
+ADD_MONTHS(SYSDATE, -24 - MOD(i*17, 24)), ADD_MONTHS(SYSDATE, -MOD(i*7, 12)),
 'Remplacement');
 END LOOP;
 COMMIT;

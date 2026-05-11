@@ -17,7 +17,6 @@ INSERT INTO LOCATION (site_id, batiment, etage, salle) VALUES (1, 'Bat A', 1,
 INSERT INTO LOCATION (site_id, batiment, etage, salle) VALUES (1, 'Bat B', 0,
 'Datacenter');
 INSERT INTO LOCATION (site_id, batiment, etage, salle) VALUES (1, 'Bat B', 1,
-
 'Labo Reseau');
 -- Locations (Pau: ID 6 à 9)
 INSERT INTO LOCATION (site_id, batiment, etage, salle) VALUES (2,
