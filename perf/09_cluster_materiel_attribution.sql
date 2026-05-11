@@ -94,6 +94,10 @@ CREATE INDEX IDX_ATTRIBUTION_USER_DATEFIN
     ON ATTRIBUTION (utilisateur_id, date_fin)
     TABLESPACE TBS_INDEX;
 
+-- Le DROP TABLE a supprimé les GRANT, on les réapplique
+GRANT SELECT ON MATERIEL    TO link_user;
+GRANT SELECT ON ATTRIBUTION TO link_user;
+
 SELECT table_name, cluster_name FROM user_tables
 WHERE cluster_name = 'CL_MATERIEL_ATTRIBUTION';
 
