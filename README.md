@@ -217,17 +217,15 @@ bash init.sh                                          # Réinit complète
 ## Structure du dépôt
 
 ```
-docker/             docker-compose.yml + scripts d'init des conteneurs
-schema/             Tablespaces, owner, tables, contraintes, rôles
-plsql/              Packages (exceptions, fonctions métier, admin parc),
-                    triggers (intégrité, audit), curseur batch
-perf/               MV logs, db links, vues matérialisées, vues globales,
-                    index (B-Tree, Bitmap, composites, function-based),
-                    cluster, benchmarks
-tests/              Données référentielles, opérationnelles, générateur
-                    paramétrique, benchmark baseline, table de mesures
-init.sh             Orchestrateur (joue tout dans le bon ordre)
-RAPPORT.md          Rapport académique complet
+/docker/      -> docker-compose.yml + scripts init
+/schema/      -> DDL : tablespaces, owner, tables, contraintes, users/roles
+/plsql/       -> Packages, triggers, curseur batch
+/perf/        -> MV logs, db links, MV, vues globales, index, cluster, benchmarks
+/tests/       -> Referentiels, donnees operationnelles, generateur, benchmark baseline
+init.sh       -> Orchestrateur qui rejoue tout dans l'ordre
+sujet.pdf     -> Le sujet initial
+rapport.pdf   -> Le présent document
+README.md     -> Instructions d'utilisation et commandes de lancement
 ```
 
 ## Ordre d'exécution dans `init.sh`
