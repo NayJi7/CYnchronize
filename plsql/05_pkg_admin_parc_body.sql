@@ -163,7 +163,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_ADMIN_PARC AS
 
         IF v_site_dest_code = 'CERGY' THEN
             EXECUTE IMMEDIATE
-                'INSERT INTO MATERIEL@dblink_cergy (
+                'INSERT INTO GLPI_OWNER.MATERIEL@dblink_cergy (
                     numero_serie, modele_id, site_id, location_id,
                     date_achat, statut, etat
                  ) VALUES (:1, :2, :3, :4, :5, :6, :7)'
@@ -176,7 +176,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_ADMIN_PARC AS
                   v_materiel.etat;
         ELSIF v_site_dest_code = 'PAU' THEN
             EXECUTE IMMEDIATE
-                'INSERT INTO MATERIEL@dblink_pau (
+                'INSERT INTO GLPI_OWNER.MATERIEL@dblink_pau (
                     numero_serie, modele_id, site_id, location_id,
                     date_achat, statut, etat
                  ) VALUES (:1, :2, :3, :4, :5, :6, :7)'
